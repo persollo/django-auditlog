@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Model, NOT_PROVIDED, DateTimeField
+from django.db.models.fields.related import ForeignKey, OneToOneField
 from django.utils import timezone
 from django.utils.encoding import smart_text
 
@@ -73,6 +74,19 @@ def get_field_value(obj, field):
                 value = timezone.make_naive(value, timezone=timezone.utc)
         except ObjectDoesNotExist:
             value = field.default if field.default is not NOT_PROVIDED else None
+    elif any([
+        isinstance(field, ForeignKey),
+        isinstance(field, OneToOneField),
+    ]):
+        if '_id' not in field.name:
+            field_name = '%s%s' % (field.name, '_id')
+        else:
+            field_name = field.name
+
+        try:
+            value = smart_text(getattr(obj, field_name, None))
+        except ObjectDoesNotExist:
+            value = None
     else:
         try:
             value = smart_text(getattr(obj, field.name, None))

@@ -13,8 +13,8 @@ from django.utils import formats
 from django.utils.encoding import python_2_unicode_compatible, smart_text
 from django.utils.six import iteritems, integer_types
 from django.utils.translation import ugettext_lazy as _
+from django.contrib.postgres.fields import JSONField
 
-from jsonfield_compat import JSONField
 from dateutil import parser
 
 

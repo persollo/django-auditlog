@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
-from jsonfield_compat import JSONField
+from django.contrib.postgres.fields import JSONField
 
 
 class Migration(migrations.Migration):

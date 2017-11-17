@@ -1,2 +1,1 @@
 python-dateutil==2.6.0
-django-jsonfield-compat==0.4.4
